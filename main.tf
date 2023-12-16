@@ -1,12 +1,10 @@
-
-resource "aws_instance" "server1" {
-  ami = var.ami_id
-  instance_market_options {
-    spot_options {
-      max_price = 0.0
-    }
+module "ec2_server" {
+  source = "./module/ec2"
+  count  = 4
+  tags = {
+    Name       = "server-${var.env_name[count.index]}"
+    Created_by = "terraform"
   }
-  instance_type = var.instance_type
-  key_name      = var.key_name
-  tags          = var.tags
 }
+
+
